@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>toggle</title>
+</head>
+<body>
+	<style>
+		.box__wrap{
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			width: 100%;
+		}
+		.box__wrap div{
+			margin: 0 20px;
+			border: 1px solid red;
+			width: calc(100% / 3);
+			word-break: break-all;
+		}
+	</style>
+	
+	<div class="box__wrap">
+		<div>
+			asfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfs
+		</div>
+
+		<div>
+			asfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfs
+		</div>
+
+		<div>
+			asfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfs	asfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfsasfjdasfasfs
+		</div>
+	</div>
+
+	<script>
+		const div = document.querySelectorAll('.box__wrap > div');
+		const vh = [];
+		function height () {
+			div.forEach((arr) => {
+				const h = Number(arr.offsetHeight);
+				vh.push(h);
+			});
+			const max = Math.max.apply(null, vh);
+			for(i = 0; i < div.length; i++){
+				div[i].style.height = max + 'px';
+			}
+		}
+		height();
+
+		function resize(){
+			window.addEventListener('resize', (height) => {
+				for(i = 0; i < div.length; i++){
+					vh.splice(0);
+					div[i].style.height = 'auto';
+				}
+				div.forEach((arr) => {
+					const h = Number(arr.offsetHeight);
+					vh.push(h);
+				});
+				const max = Math.max.apply(null, vh);
+				for(i = 0; i < div.length; i++){
+					div[i].style.height = max + 'px';
+				}
+			})
+		}
+		resize();	
+
+
+	</script>
+
+</body>
+</html>
