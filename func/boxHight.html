@@ -37,23 +37,39 @@
 	</div>
 
 	<script>
+		// 변수 선언
 		const div = document.querySelectorAll('.box__wrap > div');
+		// div의 높이값을 담을 변수 만들기
 		const vh = [];
+		
 		function height () {
 			div.forEach((arr) => {
 				const h = Number(arr.offsetHeight);
+				console.log(arr);
 				vh.push(h);
 			});
 			const max = Math.max.apply(null, vh);
+			/*
+				Math.max 매개변수들의 최대값을 구할 수 있음
+				전역변수에 배열을 넣어 사용하면 오류 -> apply를 활용
+
+				apply를실행하면 첫번째 파라미터로 보낸 this의 대상이 바뀜
+				첫번째 파라미터로 보낸 부모메서드로 this를 바꾸기 때문에 
+				this를 받지 않으려면 null을 적어줌
+				두번째 파라미터에는 배열만 들어감(자동으로 큰 값을 뽑아올 수 있음)
+
+			*/ 
 			for(i = 0; i < div.length; i++){
 				div[i].style.height = max + 'px';
 			}
 		}
 		height();
 
+		// 화면 리사이즈시 높이값 재계산 후 재할당
 		function resize(){
 			window.addEventListener('resize', (height) => {
 				for(i = 0; i < div.length; i++){
+					// 배열 초기화
 					vh.splice(0);
 					div[i].style.height = 'auto';
 				}
