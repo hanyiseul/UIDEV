@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>toggle</title>
+	<title>boxHeight</title>
 </head>
 <body>
 	<style>
@@ -37,55 +37,81 @@
 	</div>
 
 	<script>
-		// 변수 선언
+		// div 박스 변수 선언
 		const div = document.querySelectorAll('.box__wrap > div');
-		// div의 높이값을 담을 변수 만들기
 		const vh = [];
-		
+
 		function height () {
-			div.forEach((arr) => {
-				const h = Number(arr.offsetHeight);
-				console.log(arr);
-				vh.push(h);
-			});
-			const max = Math.max.apply(null, vh);
-			/*
-				Math.max 매개변수들의 최대값을 구할 수 있음
-				전역변수에 배열을 넣어 사용하면 오류 -> apply를 활용
+		div.forEach((arr) => {
+			const h = Number(arr.offsetHeight);
+			vh.push(h);
+		});
+		const max = Math.max.apply(null, vh);
+		for(i = 0; i < div.length; i++){
+			div[i].style.height = max + 'px';
+		}
+		return;
+	}
+	height();
 
-				apply를실행하면 첫번째 파라미터로 보낸 this의 대상이 바뀜
-				첫번째 파라미터로 보낸 부모메서드로 this를 바꾸기 때문에 
-				this를 받지 않으려면 null을 적어줌
-				두번째 파라미터에는 배열만 들어감(자동으로 큰 값을 뽑아올 수 있음)
-
-			*/ 
+	function resize(){
+		window.addEventListener('resize', (e) => {
 			for(i = 0; i < div.length; i++){
-				div[i].style.height = max + 'px';
+				vh.splice(0);
+				div[i].style.height = 'auto';
 			}
-		}
-		height();
-
-		// 화면 리사이즈시 높이값 재계산 후 재할당
-		function resize(){
-			window.addEventListener('resize', (height) => {
-				for(i = 0; i < div.length; i++){
-					// 배열 초기화
-					vh.splice(0);
-					div[i].style.height = 'auto';
-				}
-				div.forEach((arr) => {
-					const h = Number(arr.offsetHeight);
-					vh.push(h);
-				});
-				const max = Math.max.apply(null, vh);
-				for(i = 0; i < div.length; i++){
-					div[i].style.height = max + 'px';
-				}
-			})
-		}
-		resize();	
+			height();
+		})
+	}
+	resize();	
 
 
+	// 클로저 활용
+		// function height(){
+		// 	// div의 높이값을 담을 변수 만들기
+		// 	const vh = []; // height 함수의 지역변수이기 때문에 밖에서 참조할 수 없음
+		// 	// div 높이값을 최대값에 맞춰주는 함수
+		// 	function heightVal () { // 지역범위 안에 있는 함수이기 때문에 밖에서 실행 못 함
+		// 		div.forEach((arr) => {
+		// 			const h = Number(arr.offsetHeight);
+		// 			vh.push(h);
+		// 		});
+		// 		const max = Math.max.apply(null, vh);
+		// 		/*
+		// 			Math.max 매개변수들의 최대값을 구할 수 있음
+		// 			전역변수에 배열을 넣어 사용하면 오류 -> apply를 활용
+
+		// 			apply를실행하면 첫번째 파라미터로 보낸 this의 대상이 바뀜
+		// 			첫번째 파라미터로 보낸 부모메서드로 this를 바꾸기 때문에 
+		// 			this를 받지 않으려면 null을 적어줌
+		// 			두번째 파라미터에는 배열만 들어감(자동으로 큰 값을 뽑아올 수 있음)
+		// 		*/ 
+		// 		for(i = 0; i < div.length; i++){
+		// 			div[i].style.height = max + 'px';
+		// 		}
+		// 	}
+		// 	return{ // 리턴값으로 밖에서 사용할 
+		// 		vh,
+		// 		heightVal,
+		// 	}
+		// }
+		
+		// const boxHeight = height();
+
+		// boxHeight.heightVal();
+
+		// // 화면 리사이즈시 높이값 재계산 후 재할당
+		// function resize(){
+		// 	window.addEventListener('resize', (e) => {
+		// 		for(i = 0; i < div.length; i++){
+		// 			// 배열 초기화
+		// 			boxHeight.vh.splice(0);
+		// 			div[i].style.height = 'auto';
+		// 		}
+		// 		boxHeight.heightVal();
+		// 	});
+		// }
+		// resize();	
 	</script>
 
 </body>
