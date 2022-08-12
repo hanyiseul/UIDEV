@@ -1,0 +1,208 @@
+.section0 {
+  text-align: center;
+  background: #000;
+}
+
+.section0 .scroll__bg {
+  background: url("../images/spotlight1.jpeg") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  -webkit-clip-path: circle(100%);
+          clip-path: circle(100%);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.section0 .scroll__msg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0);
+  color: #fff;
+}
+
+.section1 {
+  padding: 0;
+  background: #000;
+}
+
+.section1 .content {
+  position: relative;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+.section1 .content .content__bg {
+  background: url("../images/spotlight1.jpeg") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  -webkit-clip-path: circle(100% at 50% 50%);
+          clip-path: circle(100% at 50% 50%);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.section1 .content .content__msg {
+  position: absolute;
+  left: 50%;
+  z-index: 3;
+  color: #fff;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  opacity: 0;
+}
+
+.section1.on .content__bg {
+  -webkit-animation: circleClip 2s running forwards,  circleClip2 2s running forwards;
+          animation: circleClip 2s running forwards,  circleClip2 2s running forwards;
+  -webkit-animation-delay: 1s, 1.8s;
+          animation-delay: 1s, 1.8s;
+}
+
+.section1.on .msgA {
+  opacity: 1;
+  bottom: -5%;
+  -webkit-animation: messageA1 2s running forwards, messageA2 2s running forwards;
+          animation: messageA1 2s running forwards, messageA2 2s running forwards;
+  -webkit-animation-delay: 1.3s, 4s;
+          animation-delay: 1.3s, 4s;
+}
+
+.section1.on .msgB {
+  opacity: 0;
+  bottom: 50%;
+  -webkit-animation: messageB 1s running forwards;
+          animation: messageB 1s running forwards;
+  -webkit-animation-delay: 6s;
+          animation-delay: 6s;
+}
+
+.section1.pause .content__bg {
+  background: #000;
+}
+
+.section1.pause .msgB {
+  opacity: 1;
+  bottom: 50%;
+}
+
+@-webkit-keyframes circleClip {
+  form {
+    -webkit-clip-path: circle(100% at 50% 50%);
+            clip-path: circle(100% at 50% 50%);
+  }
+  to {
+    -webkit-clip-path: circle(10% at 50% 35%);
+            clip-path: circle(10% at 50% 35%);
+  }
+}
+
+@keyframes circleClip {
+  form {
+    -webkit-clip-path: circle(100% at 50% 50%);
+            clip-path: circle(100% at 50% 50%);
+  }
+  to {
+    -webkit-clip-path: circle(10% at 50% 35%);
+            clip-path: circle(10% at 50% 35%);
+  }
+}
+
+@-webkit-keyframes circleClip2 {
+  form {
+    -webkit-clip-path: circle(10% at 50% 35%);
+            clip-path: circle(10% at 50% 35%);
+  }
+  to {
+    -webkit-clip-path: circle(5% at 50% -30%);
+            clip-path: circle(5% at 50% -30%);
+  }
+}
+
+@keyframes circleClip2 {
+  form {
+    -webkit-clip-path: circle(10% at 50% 35%);
+            clip-path: circle(10% at 50% 35%);
+  }
+  to {
+    -webkit-clip-path: circle(5% at 50% -30%);
+            clip-path: circle(5% at 50% -30%);
+  }
+}
+
+@-webkit-keyframes messageA1 {
+  form {
+    opacity: 1;
+    bottom: -5%;
+  }
+  to {
+    opacity: 1;
+    bottom: 50%;
+  }
+}
+
+@keyframes messageA1 {
+  form {
+    opacity: 1;
+    bottom: -5%;
+  }
+  to {
+    opacity: 1;
+    bottom: 50%;
+  }
+}
+
+@-webkit-keyframes messageA2 {
+  form {
+    opacity: 1;
+    bottom: 50%;
+  }
+  to {
+    opacity: 0;
+    bottom: 50%;
+  }
+}
+
+@keyframes messageA2 {
+  form {
+    opacity: 1;
+    bottom: 50%;
+  }
+  to {
+    opacity: 0;
+    bottom: 50%;
+  }
+}
+
+@-webkit-keyframes messageB {
+  form {
+    opacity: 0;
+    bottom: 50%;
+  }
+  to {
+    opacity: 1;
+    bottom: 50%;
+  }
+}
+
+@keyframes messageB {
+  form {
+    opacity: 0;
+    bottom: 50%;
+  }
+  to {
+    opacity: 1;
+    bottom: 50%;
+  }
+}
+/*# sourceMappingURL=spotlight.css.map */
