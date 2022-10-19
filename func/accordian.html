@@ -4,21 +4,41 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>toggle</title>
+	<title>accordion</title>
 </head>
 <body>
 	<style>
-		.acco__list .acco__title {
+		li{
+			list-style: none;
+		}
+		a{
+			color: #000;
+			text-decoration: none;
+		}
+		.acco__list{
+			padding: 0 20px;
+			border: 1px solid #333;
+			border-width: 1px 0;
+		}
+
+		.acco__item {
+			position: relative;
+		}
+		.acco__item .acco__button {
 				position: relative;
 				display: inline-block;
 				width: 100%;
 				padding: 12px 0;
 				font-weight: 700;
 				font-size: 24px;
+				text-align: left;
 				line-height: 26px;
+				border: none;
+				background: none;
+				cursor: pointer;
 			}
 
-			.acco__list .acco__title:before, .acco__list .acco__title:after {
+			.acco__item .acco__button:before, .acco__list .acco__button:after {
 				content: '';
 				position: absolute;
 				top: 50%;
@@ -27,36 +47,33 @@
 				height: 1px;
 				border: 1px solid #000;
 				border-width: 1px 0 0;
-				-webkit-transform: rotate(180deg);
-								transform: rotate(180deg);
+				transform: rotate(180deg);
 			}
 
-			.acco__list .acco__title:after {
-				-webkit-transform: rotate(90deg);
-								transform: rotate(90deg);
-				-webkit-transition: 0.1s linear;
+			.acco__item .acco__button:after {
+				transform: rotate(90deg);
 				transition: 0.1s linear;
 			}
 
-			.acco__list .acco__title.on:after {
-				-webkit-transform: rotate(180deg);
-								transform: rotate(180deg);
+			.acco__item.on .acco__button:after {
+				transform: rotate(180deg);
 			}
 
-			.acco__list .acco__title.on + .acco__subList {
-				height: 100%;
+			.acco__item.on .acco__body {
+				height: auto;
 				visibility: visible;
 			}
 
-			.acco__list .acco__subList {
+			.acco__item .acco__body {
+				position: relative;
 				height: 0;
 				overflow: hidden;
 				visibility: hidden;
-				-webkit-transition: 0.15s linear;
+				background: #f8f8f8;
 				transition: 0.15s linear;
 			}
 
-			.acco__list .acco__subList > li a {
+			.acco__list .acco__body > .list li a {
 				display: inline-block;
 				width: 100%;
 				padding: 12px 0;
@@ -67,53 +84,151 @@
 			}
 	</style>
 	
-	<ul class="sitemap__content acco__list">
-		<li>
-			<p class="acco__title">서비스</p>
-			<ul class="acco__subList">
-				<li><a href="#">시스템 구축·운영</a></li>
-				<li><a href="#">빅데이터</a></li>
-				<li><a href="#">ERP</a></li>
-				<li><a href="#">클라우드</a></li>
-				<li><a href="#">HRD 플랫폼</a></li>
-				<li><a href="#">보안</a></li>
-			</ul>
+	<ul class="acco__list">
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+				</ul>
+			</div>
 		</li>
-		<li>
-			<p class="acco__title">서비스2</p>
-			<ul class="acco__subList">
-				<li><a href="#">시스템 구축·운영</a></li>
-				<li><a href="#">빅데이터</a></li>
-				<li><a href="#">ERP</a></li>
-				<li><a href="#">클라우드</a></li>
-				<li><a href="#">HRD 플랫폼</a></li>
-				<li><a href="#">보안</a></li>
-			</ul>
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스2</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+				</ul>
+			</div>
 		</li>
-		<li>
-			<p class="acco__title">서비스</p>
-			<ul class="acco__subList">
-				<li><a href="#">시스템 구축·운영</a></li>
-				<li><a href="#">빅데이터</a></li>
-				<li><a href="#">ERP</a></li>
-				<li><a href="#">클라우드</a></li>
-				<li><a href="#">HRD 플랫폼</a></li>
-				<li><a href="#">보안</a></li>
-			</ul>
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스3</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+
+
+	<ul class="acco__list">
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스4</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스5</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="acco__item">
+			<div class="acco__head">
+				<button type="button" class="acco__button">서비스6</button>
+			</div>
+			<div class="acco__body">
+				<ul class="list">
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+					<li><a href="#">시스템 구축·운영</a></li>
+					<li><a href="#">빅데이터</a></li>
+					<li><a href="#">ERP</a></li>
+					<li><a href="#">클라우드</a></li>
+					<li><a href="#">HRD 플랫폼</a></li>
+					<li><a href="#">보안</a></li>
+				</ul>
+			</div>
 		</li>
 	</ul>
 
 	<script>
-			// accordion
-			const acco = document.querySelectorAll('.acco__list');
-			const accoTitle = document.querySelectorAll('.acco__list .acco__title');
-			const accoBody = document.querySelectorAll('.acco__subList');
+			// accordionddd
+			const accoTitle = document.querySelectorAll('.acco__button');
+			const accoItem = document.querySelectorAll('.acco__item');
+			const accoBody = document.querySelectorAll('.acco__body');
+			const accoHead = document.querySelectorAll('.acco__head');
+
 
 			function accordion(){
 				for(let i=0; i < accoTitle.length; i++){
+					// 아코디언 접근성
+					accoTitle[i].setAttribute('aria-controls', 'acco'+ i);
+					accoTitle[i].setAttribute('aria-expanded', false);
+					accoTitle[i].setAttribute('tabindex', 0);
+					accoBody[i].setAttribute('id', 'acco'+ i);
+
+					// 버튼 기능 표시
+					const btn = document.createElement('span');
+					btn.classList.add('blind');
+					const btnText = document.createTextNode('펼치기 버튼');
+					btn.appendChild(btnText);
+					accoItem[i].appendChild(btn);
+					btnText.innerHTML = '펼치기';
+
+					// 아코디언 클릭 이벤트
 					accoTitle[i].addEventListener('click', (e)=>{
-						if(accoTitle[i].getAttribute('class') !== 'on'){
-							accoTitle[i].classList.toggle('on');
+						if (!accoItem[i].classList.contains('on')){
+							accoBody[i].style.height = accoBody[i].scrollHeight + 'px';
+							accoItem[i].classList.add('on');
+							accoTitle[i].setAttribute('aria-expanded', true);
+							btn.innerText = '접기 버튼';
+						} else{
+							accoBody[i].style.height = 0;
+							accoItem[i].classList.remove('on');
+							accoTitle[i].setAttribute('aria-expanded', false);
+							btn.innerText = '펼치기 버튼';
 						}
 					});
 				}
