@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>tab</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<style>
+	a{
+		text-decoration: none;
+	}
+	.tab__list {
+		margin-bottom: 30px;
+	}
+
+	.tab__list > li {
+		position: relative;
+		display: inline-block;
+	}
+
+	.tab__list > li.on .button {
+		color: #0354FF;
+		transition: 0.15s linear;
+	}
+
+	.tab__list > li:before {
+		content: '';
+		position: absolute;
+		bottom: -2px;
+		left: 0;
+		display: block;
+		width: 0;
+		height: 1px;
+		border-top: 3px solid #3569FB;
+		transition: 0.15s linear;
+	}
+
+	.tab__list > li.on:before {
+		width: 100%;
+	}
+
+	.tab__list > li .button {
+		padding: 13px 24px;
+		color: #B7BCC7;
+		background: transparent;
+	}
+
+	.tab__list > li .button:hover, .tab__list > li .button:focus {
+		color: #0354FF;
+		background: transparent;
+	}
+
+	.subTab__wrap .tab__list > li.on .button {
+		color: #fff;
+		border-color: #3569FB;
+		background: #3569FB;
+	}
+
+	.subTab__wrap .tab__list > li.on .button:hover, .subTab__wrap .tab__list > li.on .button:focus {
+		color: #fff;
+	}
+
+	.subTab__wrap .tab__list > li .button {
+		color: #B7BCC7;
+		border-color: #D4D9E3;
+		background: #FAFAFA;
+	}
+
+	.tab__contents {
+		display: none;
+	}
+
+	.tab__contents.is-active {
+		display: block;
+	}
+
+	.subTab__contents {
+		display: none;
+	}
+
+	.subTab__contents.is-active {
+		display: block;
+	}
+	</style>
+
+	<div class="tab__wrap">
+		<h2>Tab 1</h2>
+
+		<ul class="tab__list tab__main">
+			<li class="on">
+				<a href="#none" class="button">Route module</a>
+			</li>
+			<li>
+				<a href="#none" class="button">Route Config</a>
+			</li>
+			<li>
+				<a href="#none" class="button">Route Config2</a>
+			</li>
+		</ul>
+
+		<div class="mainTap__wrap">
+			<!-- Route module -->
+			<div class="tab__contents is-active">
+				test1
+			</div>
+
+			<!-- Route Config -->
+			<div class="tab__contents">
+				test2
+			</div>
+
+			<!-- Route Config2 -->
+			<div class="tab__contents">
+				test3
+			</div>
+		</div>
+	</div>
+	
+	<div class="tab__wrap">
+		<h2>Tab 2</h2>
+
+		<ul class="tab__list tab__main">
+			<li class="on">
+				<a href="#none" class="button">Route module</a>
+			</li>
+			<li>
+				<a href="#none" class="button">Route Config</a>
+			</li>
+		</ul>
+
+		<div class="tab__sub">
+			<div class="tab__contents is-active">
+				<ul class="tab__list">
+					<li class="on">
+						<a href="#none" class="button">test1</a>
+					</li>
+					<li>
+						<a href="#none" class="button">test2</a>
+					</li>
+				</ul>
+				<div class="subTab__wrap">
+					<!-- test1 -->
+					<div class="subTab__contents is-active">
+						test1
+					</div>
+					<!-- test2 -->
+					<div class="subTab__contents">
+						test2
+					</div>
+				</div>
+			</div>
+			<div class="tab__contents">
+				<ul class="tab__list">
+					<li class="on">
+						<a href="#none" class="button">test3</a>
+					</li>
+					<li>
+						<a href="#none" class="button">test4</a>
+					</li>
+					<li>
+						<a href="#none" class="button">test5</a>
+					</li>
+				</ul>
+				<div class="subTab__wrap">
+					<!-- test3 -->
+					<div class="subTab__contents is-active">
+						test3
+					</div>
+					<!-- test4 -->
+					<div class="subTab__contents">
+						test4
+					</div>
+					<!-- test5 -->
+					<div class="subTab__contents">
+						test5
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		
+		// 메인탭
+		
+			// 변수선언
+			const tabList = document.querySelectorAll('.tab__list');
+			const mainTab = document.querySelectorAll('.tab__main > li');
+			const active = document.querySelectorAll('.tab__list > li.on');
+			const tabCon = document.querySelectorAll('.tab__contents');
+			const conActive =  document.querySelectorAll('.tab__contents.is-active');
+			const subTab = document.querySelectorAll('.tab__contents > .tab__list > li');
+			const subTabCon = document.querySelectorAll('.subTab__wrap .subTab__contents');
+			const subConAct =  document.querySelectorAll('.subTab__contents.is-active');
+
+			// 형제 노드 계산 함수
+			function siblings(t) {
+				const children = t.parentElement.children;
+				const arr = [];
+
+				for (let i = 0; i < children.length; i++) {    
+					arr.push(children[i]);
+				}
+				
+				return arr.filter(function(e){
+					return e != t;
+				});
+			}
+
+			// 접근성
+			function tabAria(){
+				for(let i = 0; i< mainTab.length; i++){
+					// tab
+					mainTab[i].setAttribute('tabindex', -1);
+					mainTab[i].setAttribute('id', 'tab' + i);
+					mainTab[i].setAttribute('aria-controls', 'tabpanel' + i);
+					mainTab[i].setAttribute('role', 'tab');
+					mainTab[i].setAttribute('aria-selected', false);
+					// tabpanel
+					tabCon[i].setAttribute('tabindex', 0);
+					tabCon[i].setAttribute('hidden', true);
+					tabCon[i].setAttribute('id', 'tabpanel' + i);
+					tabCon[i].setAttribute('role', 'tabpanel');
+					tabCon[i].setAttribute('aria-labelledby', 'tab' + i);
+				}
+				for(let i = 0; i< subTab.length; i++){
+					// sub tab
+					subTab[i].setAttribute('tabindex', -1);
+					subTab[i].setAttribute('id', 'subTab' + i);
+					subTab[i].setAttribute('aria-selected', false);
+					subTab[i].setAttribute('aria-controls', 'subTabpanel' + i);
+					// sub tabpanel
+					subTabCon[i].setAttribute('tabindex', 0);
+					subTabCon[i].setAttribute('hidden', true);
+					subTabCon[i].setAttribute('id', 'subTabpanel' + i);
+					subTabCon[i].setAttribute('role', 'tabpanel');
+					subTabCon[i].setAttribute('aria-labelledby', 'subTab' + i);
+				}
+				for(let i = 0; i< tabList.length; i++){
+					tabList[i].setAttribute('role', 'tablist');
+					active[i].setAttribute('tabindex', 0);
+					active[i].setAttribute('aria-selected', true);
+					
+				}
+				for(let i = 0; i< conActive.length; i++){
+					conActive[i].setAttribute('hidden', false);
+					subConAct[i].setAttribute('hidden', false);
+				}
+			}
+			tabAria();
+
+			// 메인 탭
+			mainTab.forEach((tab, index)=>{
+				tab.addEventListener('click', ()=>{
+					const tabSiblings = siblings(tab);
+					const tabSiblingsCon = siblings(tabCon[index]);
+					for(let i = 0; i< tabSiblings.length; i++){
+						tabSiblings[i].classList.remove('on');
+						tabSiblings[i].setAttribute('aria-selected', false);
+						tabSiblingsCon[i].classList.remove('is-active');
+					}
+					tab.classList.add('on');
+					tab.setAttribute('aria-selected', true);
+					tabCon[index].classList.add('is-active');
+				});
+			});	
+					
+			// 서브 탭
+			subTab.forEach((tab, index)=>{
+				tab.addEventListener('click', ()=>{
+					const tabSiblings2 = siblings(tab);
+					const tabSiblingsCon2 = siblings(subTabCon[index]);
+						console.log(tabSiblingsCon2);
+					for(let i = 0; i< tabSiblings2.length; i++){
+						tabSiblings2[i].classList.remove('on');
+						tabSiblings2[i].setAttribute('aria-selected', false);
+						tabSiblingsCon2[i].classList.remove('is-active');
+					}
+					tab.classList.add('on');
+					tab.setAttribute('aria-selected', true);
+					subTabCon[index].classList.add('is-active');
+				});
+			});	
+	</script>
+
+</body>
+</html>
