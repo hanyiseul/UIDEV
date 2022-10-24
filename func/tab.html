@@ -184,107 +184,105 @@
 	</div>
 
 	<script>
-		
-		// 메인탭
-		
-			// 변수선언
-			const tabList = document.querySelectorAll('.tab__list');
-			const mainTab = document.querySelectorAll('.tab__main > li');
-			const active = document.querySelectorAll('.tab__list > li.on');
-			const tabCon = document.querySelectorAll('.tab__contents');
-			const conActive =  document.querySelectorAll('.tab__contents.is-active');
-			const subTab = document.querySelectorAll('.tab__contents > .tab__list > li');
-			const subTabCon = document.querySelectorAll('.subTab__wrap .subTab__contents');
-			const subConAct =  document.querySelectorAll('.subTab__contents.is-active');
 
-			// 형제 노드 계산 함수
-			function siblings(t) {
-				const children = t.parentElement.children;
-				const arr = [];
+		// 변수선언
+		const tabList = document.querySelectorAll('.tab__list');
+		const mainTab = document.querySelectorAll('.tab__main > li');
+		const active = document.querySelectorAll('.tab__list > li.on');
+		const tabCon = document.querySelectorAll('.tab__contents');
+		const conActive =  document.querySelectorAll('.tab__contents.is-active');
+		const subTab = document.querySelectorAll('.tab__contents > .tab__list > li');
+		const subTabCon = document.querySelectorAll('.subTab__wrap .subTab__contents');
+		const subConAct =  document.querySelectorAll('.subTab__contents.is-active');
 
-				for (let i = 0; i < children.length; i++) {    
-					arr.push(children[i]);
-				}
+		// 형제 노드 계산 함수
+		function siblings(t) {
+			const children = t.parentElement.children;
+			const arr = [];
+
+			for (let i = 0; i < children.length; i++) {    
+				arr.push(children[i]);
+			}
+			
+			return arr.filter(function(e){
+				return e != t;
+			});
+		}
+
+		// 접근성
+		function tabAria(){
+			for(let i = 0; i< mainTab.length; i++){
+				// tab
+				mainTab[i].setAttribute('tabindex', -1);
+				mainTab[i].setAttribute('id', 'tab' + i);
+				mainTab[i].setAttribute('aria-controls', 'tabpanel' + i);
+				mainTab[i].setAttribute('role', 'tab');
+				mainTab[i].setAttribute('aria-selected', false);
+				// tabpanel
+				tabCon[i].setAttribute('tabindex', 0);
+				tabCon[i].setAttribute('hidden', true);
+				tabCon[i].setAttribute('id', 'tabpanel' + i);
+				tabCon[i].setAttribute('role', 'tabpanel');
+				tabCon[i].setAttribute('aria-labelledby', 'tab' + i);
+			}
+			for(let i = 0; i< subTab.length; i++){
+				// sub tab
+				subTab[i].setAttribute('tabindex', -1);
+				subTab[i].setAttribute('id', 'subTab' + i);
+				subTab[i].setAttribute('aria-selected', false);
+				subTab[i].setAttribute('aria-controls', 'subTabpanel' + i);
+				// sub tabpanel
+				subTabCon[i].setAttribute('tabindex', 0);
+				subTabCon[i].setAttribute('hidden', true);
+				subTabCon[i].setAttribute('id', 'subTabpanel' + i);
+				subTabCon[i].setAttribute('role', 'tabpanel');
+				subTabCon[i].setAttribute('aria-labelledby', 'subTab' + i);
+			}
+			for(let i = 0; i< tabList.length; i++){
+				tabList[i].setAttribute('role', 'tablist');
+				active[i].setAttribute('tabindex', 0);
+				active[i].setAttribute('aria-selected', true);
 				
-				return arr.filter(function(e){
-					return e != t;
-				});
 			}
-
-			// 접근성
-			function tabAria(){
-				for(let i = 0; i< mainTab.length; i++){
-					// tab
-					mainTab[i].setAttribute('tabindex', -1);
-					mainTab[i].setAttribute('id', 'tab' + i);
-					mainTab[i].setAttribute('aria-controls', 'tabpanel' + i);
-					mainTab[i].setAttribute('role', 'tab');
-					mainTab[i].setAttribute('aria-selected', false);
-					// tabpanel
-					tabCon[i].setAttribute('tabindex', 0);
-					tabCon[i].setAttribute('hidden', true);
-					tabCon[i].setAttribute('id', 'tabpanel' + i);
-					tabCon[i].setAttribute('role', 'tabpanel');
-					tabCon[i].setAttribute('aria-labelledby', 'tab' + i);
-				}
-				for(let i = 0; i< subTab.length; i++){
-					// sub tab
-					subTab[i].setAttribute('tabindex', -1);
-					subTab[i].setAttribute('id', 'subTab' + i);
-					subTab[i].setAttribute('aria-selected', false);
-					subTab[i].setAttribute('aria-controls', 'subTabpanel' + i);
-					// sub tabpanel
-					subTabCon[i].setAttribute('tabindex', 0);
-					subTabCon[i].setAttribute('hidden', true);
-					subTabCon[i].setAttribute('id', 'subTabpanel' + i);
-					subTabCon[i].setAttribute('role', 'tabpanel');
-					subTabCon[i].setAttribute('aria-labelledby', 'subTab' + i);
-				}
-				for(let i = 0; i< tabList.length; i++){
-					tabList[i].setAttribute('role', 'tablist');
-					active[i].setAttribute('tabindex', 0);
-					active[i].setAttribute('aria-selected', true);
-					
-				}
-				for(let i = 0; i< conActive.length; i++){
-					conActive[i].setAttribute('hidden', false);
-					subConAct[i].setAttribute('hidden', false);
-				}
+			for(let i = 0; i< conActive.length; i++){
+				conActive[i].setAttribute('hidden', false);
+				subConAct[i].setAttribute('hidden', false);
 			}
-			tabAria();
+		}
+		tabAria();
 
-			// 메인 탭
-			mainTab.forEach((tab, index)=>{
-				tab.addEventListener('click', ()=>{
-					const tabSiblings = siblings(tab);
-					const tabSiblingsCon = siblings(tabCon[index]);
-					for(let i = 0; i< tabSiblings.length; i++){
-						tabSiblings[i].classList.remove('on');
-						tabSiblings[i].setAttribute('aria-selected', false);
-						tabSiblingsCon[i].classList.remove('is-active');
-					}
-					tab.classList.add('on');
-					tab.setAttribute('aria-selected', true);
-					tabCon[index].classList.add('is-active');
-				});
-			});	
-					
-			// 서브 탭
-			subTab.forEach((tab, index)=>{
-				tab.addEventListener('click', ()=>{
-					const tabSiblings2 = siblings(tab);
-					const tabSiblingsCon2 = siblings(subTabCon[index]);
-						console.log(tabSiblingsCon2);
-					for(let i = 0; i< tabSiblings2.length; i++){
-						tabSiblings2[i].classList.remove('on');
-						tabSiblings2[i].setAttribute('aria-selected', false);
-						tabSiblingsCon2[i].classList.remove('is-active');
-					}
-					tab.classList.add('on');
-					tab.setAttribute('aria-selected', true);
-					subTabCon[index].classList.add('is-active');
-				});
-			});	
+		// 메인 탭
+		mainTab.forEach((tab, index)=>{
+			tab.addEventListener('click', ()=>{
+				const tabSiblings = siblings(tab);
+				const tabSiblingsCon = siblings(tabCon[index]);
+				for(let i = 0; i< tabSiblings.length; i++){
+					tabSiblings[i].classList.remove('on');
+					tabSiblings[i].setAttribute('aria-selected', false);
+					tabSiblingsCon[i].classList.remove('is-active');
+				}
+				tab.classList.add('on');
+				tab.setAttribute('aria-selected', true);
+				tabCon[index].classList.add('is-active');
+			});
+		});	
+				
+		// 서브 탭
+		subTab.forEach((tab, index)=>{
+			tab.addEventListener('click', ()=>{
+				const tabSiblings2 = siblings(tab);
+				const tabSiblingsCon2 = siblings(subTabCon[index]);
+					console.log(tabSiblingsCon2);
+				for(let i = 0; i< tabSiblings2.length; i++){
+					tabSiblings2[i].classList.remove('on');
+					tabSiblings2[i].setAttribute('aria-selected', false);
+					tabSiblingsCon2[i].classList.remove('is-active');
+				}
+				tab.classList.add('on');
+				tab.setAttribute('aria-selected', true);
+				subTabCon[index].classList.add('is-active');
+			});
+		});	
 	</script>
 
 </body>
